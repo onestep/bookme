@@ -1,0 +1,29 @@
+{
+  "name": "bookme",
+  "version": "1.0.0",
+  "description": "BookMe Application Server",
+  "main": "server.js",
+  "scripts": {
+    "test": "mocha test/",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/onestep/bookme.git"
+  },
+  "author": "Valerii Liasotskyi",
+  "license": "SEE LICENSE IN LICENSE.md",
+  "bugs": {
+    "url": "https://github.com/onestep/bookme/issues"
+  },
+  "homepage": "https://reserve.in.ua/",
+  "private": true,
+  "dependencies": {
+    "express": "^4.16.2"
+  },
+  "devDependencies": {
+    "mocha": "^4.0.1",
+    "sinon": "^4.0.1",
+    "chai": "^4.1.2"
+  }
+}
