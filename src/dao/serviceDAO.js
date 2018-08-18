@@ -1,45 +1,79 @@
 "use strict";
 
+var mysql = require("mysql"),
+    Promise = require("../../promise").Promise;
+
+var connection = mysql.createConnection({
+    host: "localhost",
+    user: "bookme",
+    password: "bookme"
+});
+
+connection.connect(function (error) {
+    if (error) {
+        throw error;
+    }
+});
+
+function mapServiceGroup(row) {
+    return {
+        id: row["service_group_id"],
+        name: row["service_group_name"],
+        description: row["service_group_description"]
+    };
+}
+
+function mapService(row) {
+    return {
+        id: row["service_id"],
+        name: row["service_name"],
+        description: row["service_description"]
+    };
+}
+
+/**
+ * @returns {Promise}
+ */
+exports.getRootServiceGroups = function () {
+    return new Promise(function (resolve, reject) {
+        connection.query("select * from bookme.service_groups where parent_service_group_id is null", function (error, resultSet) {
+            if (error != null) {
+                reject(error);
+            } else {
+                resolve(resultSet.map(mapServiceGroup));
+            }
+        });
+    });
+};
+
 /**
  * @param {?number} parentGroupId
- * @returns {Array.<Object>}
+ * @returns {Promise}
  */
 exports.getServiceGroups = function (parentGroupId) {
-    if (parentGroupId === null) {
-        return [
-            {
-                id: 1,
-                name: "Group",
-                description: "Group Description"
+    return new Promise(function (resolve, reject) {
+        connection.query("select * from bookme.service_groups where parent_service_group_id = ?", parentGroupId, function (error, resultSet) {
+            if (error != null) {
+                reject(error);
+            } else {
+                resolve(resultSet.map(mapServiceGroup));
             }
-        ];
-    } else if (parentGroupId === 1) {
-        return [
-            {
-                id: 2,
-                name: "Sub Group",
-                description: "Sub Group Description"
-            }
-        ]
-    } else {
-        return null;
-    }
+        });
+    });
 };
 
 /**
  * @param {number} groupId
- * @returns {Array.<Object>}
+ * @returns {Promise}
  */
 exports.getServices = function (groupId) {
-    if (groupId === 1) {
-        return [
-            {
-                id: 1,
-                name: "Service",
-                description: "Service Description"
+    return new Promise(function (resolve, reject) {
+        connection.query("select * from bookme.services where service_group_id = ?", groupId, function (error, resultSet) {
+            if (error != null) {
+                reject(error);
+            } else {
+                resolve(resultSet.map(mapService));
             }
-        ]
-    } else {
-        return null;
-    }
+        });
+    });
 };

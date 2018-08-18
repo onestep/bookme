@@ -7,7 +7,10 @@ var serviceDAO = require("../../src/dao/serviceDAO");
  * @param {Object} res
  */
 exports.readRootServiceGroups = function (req, res) {
-    res.json(serviceDAO.getServiceGroups(null));
+    serviceDAO.getRootServiceGroups()
+        .then(function (serviceGroups) {
+            res.json(serviceGroups);
+        });
 };
 
 /**
@@ -15,14 +18,16 @@ exports.readRootServiceGroups = function (req, res) {
  * @param {Object} res
  */
 exports.readServiceGroups = function (req, res) {
-    var groupId = parseInt(req.params["groupId"]),
-        serviceGroups = serviceDAO.getServiceGroups(groupId);
+    var groupId = parseInt(req.params["groupId"]);
 
-    if (serviceGroups === null) {
-        res.sendStatus(404);
-    } else {
-        res.json(serviceGroups);
-    }
+    serviceDAO.getServiceGroups(groupId)
+        .then(function (serviceGroups) {
+            if (serviceGroups.length > 0) {
+                res.json(serviceGroups);
+            } else {
+                res.sendStatus(404);
+            }
+        });
 };
 
 /**
@@ -30,12 +35,14 @@ exports.readServiceGroups = function (req, res) {
  * @param {Object} res
  */
 exports.readServices = function (req, res) {
-    var groupId = parseInt(req.params["groupId"]),
-        services = serviceDAO.getServices(groupId);
+    var groupId = parseInt(req.params["groupId"]);
 
-    if (services === null) {
-        res.sendStatus(404);
-    } else {
-        res.json(services);
-    }
+    serviceDAO.getServices(groupId)
+        .then(function (services) {
+            if (services.length > 0) {
+                res.json(services);
+            } else {
+                res.sendStatus(404);
+            }
+        });
 };
