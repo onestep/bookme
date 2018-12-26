@@ -1,5 +1,3 @@
-"use strict";
-
 function ServiceGroupService($http) {
     this.$http = $http;
 }

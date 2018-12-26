@@ -1,6 +1,4 @@
-"use strict";
-
-var serviceController = require("./controllers/serviceController");
+const serviceController = require("./controllers/serviceController");
 
 /**
  * @param {Object} app

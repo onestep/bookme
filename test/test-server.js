@@ -1,9 +1,8 @@
-"use strict";
+const mocha = require("mocha");
+const chai = require("chai");
 
-var mocha = require("mocha"),
-    chai = require("chai"),
-    test = mocha.test,
-    assert = chai.assert;
+const test = mocha.test;
+const assert = chai.assert;
 
 test("server", function () {
     assert(true);

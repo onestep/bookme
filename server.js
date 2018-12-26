@@ -1,8 +1,7 @@
-"use strict";
+const express = require("express");
+const clientRoutes = require("./api/clientRoutes");
 
-var express = require("express"),
-    clientRoutes = require("./api/clientRoutes"),
-    app = express();
+const app = express();
 
 app.use(express.static(__dirname + "/public"));
 
