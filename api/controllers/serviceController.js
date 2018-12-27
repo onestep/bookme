@@ -1,4 +1,4 @@
-const serviceDAO = require("../../src/dao/mysql/serviceDAO");
+const serviceDAO = require("../../src/dao/sqlite/serviceDAO");
 
 /**
  * @param {Object} req
@@ -8,6 +8,8 @@ exports.readRootServiceGroups = function (req, res) {
     serviceDAO.getRootServiceGroups()
         .then((serviceGroups) => {
             res.json(serviceGroups);
+        }, (error) => {
+            res.sendStatus(500);
         });
 };
 
@@ -25,6 +27,8 @@ exports.readServiceGroups = function (req, res) {
             } else {
                 res.sendStatus(404);
             }
+        }, (error) => {
+            res.sendStatus(500);
         });
 };
 

@@ -1,13 +1,7 @@
-const mysql = require("mysql");
+const sqlite3 = require("sqlite3");
+const path = require("path");
 
-const connection = mysql.createConnection({
-    host: "localhost",
-    user: "bookme",
-    password: "bookme",
-    database: "bookme"
-});
-
-connection.connect((error) => {
+const database = new sqlite3.Database(path.resolve(__dirname, "../../../bookme.sqlite"), (error) => {
     if (error) {
         throw error;
     }
@@ -34,7 +28,7 @@ function mapService(row) {
  */
 exports.getRootServiceGroups = function () {
     return new Promise((resolve, reject) => {
-        connection.query("select * from service_groups where parent_service_group_id is null", function (error, resultSet) {
+        database.all("select * from service_groups where parent_service_group_id is null", function (error, resultSet) {
             if (error != null) {
                 reject(error);
             } else {
@@ -50,7 +44,7 @@ exports.getRootServiceGroups = function () {
  */
 exports.getServiceGroups = function (parentGroupId) {
     return new Promise((resolve, reject) => {
-        connection.query("select * from service_groups where parent_service_group_id = ?", parentGroupId, function (error, resultSet) {
+        database.all("select * from service_groups where parent_service_group_id = ?", parentGroupId, function (error, resultSet) {
             if (error != null) {
                 reject(error);
             } else {
@@ -66,7 +60,7 @@ exports.getServiceGroups = function (parentGroupId) {
  */
 exports.getServices = function (groupId) {
     return new Promise((resolve, reject) => {
-        connection.query("select * from services where service_group_id = ?", groupId, function (error, resultSet) {
+        database.all("select * from services where service_group_id = ?", groupId, function (error, resultSet) {
             if (error != null) {
                 reject(error);
             } else {
