@@ -19,11 +19,11 @@
             <h4>Choose where you want to start</h4>
             <p>You can start from picking a service, specialist or time</p>
             <button class="btn btn-primary" ng-click="landingController.selectService()">Select desired service</button>
-            <button class="btn btn-primary">Pick a specialist</button>
+            <button class="btn btn-primary" ng-click="landingController.selectSpecialist()">Pick a specialist</button>
             <button class="btn btn-primary">Choose specific time</button>
         </div>
     </div>
-    <div class="card" ng-show="landingController.serviceGroups != null">
+    <div class="card mb-4 ng-hide" ng-show="landingController.serviceGroups != null">
         <div class="card-header">
             Service selector
         </div>
@@ -33,6 +33,20 @@
                 <a href="#" class="list-group-item list-group-item-action" ng-repeat="serviceGroup in landingController.serviceGroups">
                     <p class="mb-1">{{serviceGroup.name}}</p>
                     <small>{{serviceGroup.description}}</small>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="card mb-4 ng-hide" ng-show="landingController.specialists != null">
+        <div class="card-header">
+            Specialist selector
+        </div>
+        <div class="card-body">
+            <h4>Pick a specialist</h4>
+            <div class="list-group">
+                <a href="#" class="list-group-item list-group-item-action" ng-repeat="specialist in landingController.specialists">
+                    <p class="mb-1">{{specialist.firstName}} {{specialist.lastName}}</p>
+                    <small>Generic</small>
                 </a>
             </div>
         </div>

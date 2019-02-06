@@ -29,8 +29,17 @@ ServiceGroupService.prototype.getServiceGroups = function () {
     return this.$http.get("/api/serviceGroups");
 };
 
-function LandingController(serviceGroupService) {
+function SpecialistService($http) {
+    this.$http = $http;
+}
+
+SpecialistService.prototype.getSpecialists = function () {
+    return this.$http.get("/api/specialists");
+};
+
+function LandingController(serviceGroupService, specialistService) {
     this.serviceGroupService = serviceGroupService;
+    this.specialistService = specialistService;
 }
 
 LandingController.prototype.selectService = function () {
@@ -39,9 +48,16 @@ LandingController.prototype.selectService = function () {
     }.bind(this));
 };
 
+LandingController.prototype.selectSpecialist = function () {
+    this.specialistService.getSpecialists().then(function (response) {
+        this.specialists = response.data;
+    }.bind(this));
+};
+
 angular.module("reserveApp", ["ngRoute"])
     .factory("mixPanelInterceptorFactory", MixPanelInterceptorFactory)
     .service("serviceGroupService", ServiceGroupService)
+    .service("specialistService", SpecialistService)
     .controller("landingController", LandingController)
     .config(function ($httpProvider) {
         $httpProvider.interceptors.push("mixPanelInterceptorFactory");

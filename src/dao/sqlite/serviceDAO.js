@@ -1,11 +1,4 @@
-const sqlite3 = require("sqlite3");
-const path = require("path");
-
-const database = new sqlite3.Database(path.resolve(__dirname, "../../../bookme.sqlite"), (error) => {
-    if (error) {
-        throw error;
-    }
-});
+const connection = require("./connection");
 
 function mapServiceGroup(row) {
     return {
@@ -27,15 +20,8 @@ function mapService(row) {
  * @returns {Promise}
  */
 exports.getRootServiceGroups = function () {
-    return new Promise((resolve, reject) => {
-        database.all("select * from service_groups where parent_service_group_id is null", function (error, resultSet) {
-            if (error != null) {
-                reject(error);
-            } else {
-                resolve(resultSet.map(mapServiceGroup));
-            }
-        });
-    });
+    return connection.selectAll("select * from service_groups where parent_service_group_id is null")
+        .then((resultSet) => resultSet.map(mapServiceGroup));
 };
 
 /**
@@ -43,15 +29,8 @@ exports.getRootServiceGroups = function () {
  * @returns {Promise}
  */
 exports.getServiceGroups = function (parentGroupId) {
-    return new Promise((resolve, reject) => {
-        database.all("select * from service_groups where parent_service_group_id = ?", parentGroupId, function (error, resultSet) {
-            if (error != null) {
-                reject(error);
-            } else {
-                resolve(resultSet.map(mapServiceGroup));
-            }
-        });
-    });
+    return connection.selectAll("select * from service_groups where parent_service_group_id = ?", parentGroupId)
+        .then((resultSet) => resultSet.map(mapServiceGroup));
 };
 
 /**
@@ -59,13 +38,6 @@ exports.getServiceGroups = function (parentGroupId) {
  * @returns {Promise}
  */
 exports.getServices = function (groupId) {
-    return new Promise((resolve, reject) => {
-        database.all("select * from services where service_group_id = ?", groupId, function (error, resultSet) {
-            if (error != null) {
-                reject(error);
-            } else {
-                resolve(resultSet.map(mapService));
-            }
-        });
-    });
+    return connection.selectAll("select * from services where service_group_id = ?", groupId)
+        .then((resultSet) => resultSet.map(mapService));
 };
