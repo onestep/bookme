@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/client.css">
     <title>Main Page</title>
 </head>
 <body>
@@ -20,7 +21,7 @@
             <p>You can start from picking a service, specialist or time</p>
             <button class="btn btn-primary" ng-click="landingController.selectService()">Select desired service</button>
             <button class="btn btn-primary" ng-click="landingController.selectSpecialist()">Pick a specialist</button>
-            <button class="btn btn-primary">Choose specific time</button>
+            <button class="btn btn-primary" ng-click="landingController.selectDateAndTime()">Choose specific time</button>
         </div>
     </div>
     <div class="card mb-4 ng-hide" ng-show="landingController.serviceGroups != null">
@@ -49,6 +50,33 @@
                     <small>Generic</small>
                 </a>
             </div>
+        </div>
+    </div>
+    <div class="card mb-4 ng-hide" ng-show="landingController.calendar != null">
+        <div class="card-header">
+            Calendar
+        </div>
+        <div class="card-body">
+            <h4>Choose specific time</h4>
+            <table class="table cl-calendar">
+                <caption>Choose date</caption>
+                <thead class="thead-light">
+                <tr>
+                    <th>Mon</th>
+                    <th>Tue</th>
+                    <th>Wed</th>
+                    <th>Thu</th>
+                    <th>Fri</th>
+                    <th>Sat</th>
+                    <th>Sun</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="week in landingController.calendar.weeks">
+                    <td ng-repeat="day in week">{{day.date}}</td>
+                </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>

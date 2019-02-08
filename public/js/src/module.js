@@ -54,6 +54,31 @@ LandingController.prototype.selectSpecialist = function () {
     }.bind(this));
 };
 
+LandingController.prototype.selectDateAndTime = function () {
+    var currentDate = new Date();
+
+    this.calendar = {
+        weeks: this._generateWeeks(currentDate.getFullYear(), currentDate.getMonth())
+    };
+};
+
+LandingController.prototype._generateWeeks = function (year, month) {
+    var startDate = new Date(year, month);
+    var endDate = new Date(year, month + 1, 0);
+    var offset = startDate.getDay() - 1;
+
+    var result = [];
+    for (var i = 0; i < endDate.getDate(); i++) {
+        var row = Math.trunc((i + offset) / 7);
+        if (!result[row]) {
+            result[row] = [{}, {}, {}, {}, {}, {}, {}];
+        }
+        result[row][(i + offset) % 7].date = i + 1;
+    }
+
+    return result;
+};
+
 angular.module("reserveApp", ["ngRoute"])
     .factory("mixPanelInterceptorFactory", MixPanelInterceptorFactory)
     .service("serviceGroupService", ServiceGroupService)
