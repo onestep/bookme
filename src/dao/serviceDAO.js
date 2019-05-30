@@ -1,4 +1,5 @@
-const connection = require("./connection");
+const config = require("../config");
+const connection = require("../connection/" + config.getApplicationOption("connection"));
 
 function mapServiceGroup(row) {
     return {
@@ -21,16 +22,16 @@ function mapService(row) {
  */
 exports.getRootServiceGroups = function () {
     return connection.selectAll("select * from service_groups where parent_service_group_id is null")
-        .then((resultSet) => resultSet.map(mapServiceGroup));
+        .then(resultSet => resultSet.map(mapServiceGroup));
 };
 
 /**
- * @param {?number} parentGroupId
+ * @param {number} parentGroupId
  * @returns {Promise}
  */
 exports.getServiceGroups = function (parentGroupId) {
     return connection.selectAll("select * from service_groups where parent_service_group_id = ?", parentGroupId)
-        .then((resultSet) => resultSet.map(mapServiceGroup));
+        .then(resultSet => resultSet.map(mapServiceGroup));
 };
 
 /**
@@ -39,5 +40,5 @@ exports.getServiceGroups = function (parentGroupId) {
  */
 exports.getServices = function (groupId) {
     return connection.selectAll("select * from services where service_group_id = ?", groupId)
-        .then((resultSet) => resultSet.map(mapService));
+        .then(resultSet => resultSet.map(mapService));
 };

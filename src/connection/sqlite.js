@@ -1,19 +1,26 @@
 const sqlite3 = require("sqlite3");
 const path = require("path");
+const config = require("../config");
 
-const database = new sqlite3.Database(path.resolve(__dirname, "../../../bookme.sqlite"), function (error) {
+const databaseFile = config.getConnectionOption("file");
+const databaseFileRoot = databaseFile.startsWith(".") ? config.getDatabaseConfigRoot() : config.getApplicationRoot();
+
+const database = new sqlite3.Database(path.resolve(databaseFileRoot, databaseFile), function (error) {
     if (error) {
         throw error;
     }
 });
 
 /**
- * @returns {Promise}
+ * @param {string} query
+ * @param {...*} params
+ * @returns {Promise.<Array>}
  */
 exports.selectAll = function (query, ...params) {
     return new Promise((resolve, reject) => {
         database.all(query, ...params, function (error, resultSet) {
             if (error) {
+                console.error(error);
                 reject(error);
             } else {
                 resolve(resultSet);
@@ -23,12 +30,15 @@ exports.selectAll = function (query, ...params) {
 };
 
 /**
+ * @param {string} query
+ * @param {...*} params
  * @returns {Promise}
  */
 exports.execute = function (query, ...params) {
     return new Promise((resolve, reject) => {
         database.run(query, ...params, function (error) {
             if (error) {
+                console.error(error);
                 reject(error)
             } else {
                 resolve();
