@@ -1,4 +1,5 @@
-const connection = require("./connection");
+const config = require("../config");
+const connection = require("../connection/" + config.getApplicationOption("connection"));
 
 function mapSpecialist(row) {
     return {

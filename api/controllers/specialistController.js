@@ -1,4 +1,4 @@
-const specialistDAO = require("../../src/dao/sqlite/specialistDAO");
+const specialistDAO = require("../../src/dao/specialistDAO");
 
 /**
  * @param {Object} req

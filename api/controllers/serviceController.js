@@ -1,4 +1,4 @@
-const serviceDAO = require("../../src/dao/sqlite/serviceDAO");
+const serviceDAO = require("../../src/dao/serviceDAO");
 
 /**
  * @param {Object} req
