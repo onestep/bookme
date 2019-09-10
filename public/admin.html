@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="adminApp">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <title>Admin Page</title>
+</head>
+<body>
+<div class="navbar navbar-light bg-light mb-4">
+    <span class="navbar-brand">BookMe Admin Console</span>
+</div>
+<div class="container">
+    <div ng-controller="serviceManagementController as serviceManagementController">
+        <h4>Service Tree</h4>
+        <div ng-repeat="serviceGroup in serviceManagementController.serviceGroups">
+            <span>{{serviceGroup.name}}</span>
+        </div>
+        <h4>Add New Service Group</h4>
+        <div>
+            <form>
+                <div class="form-group">
+                    <label for="newServiceGroupName">Service Group Name</label>
+                    <input id="newServiceGroupName" type="text" class="form-control" ng-model="serviceManagementController.newServiceGroup.name">
+                </div>
+                <div class="form-group">
+                    <label for="newServiceGroupDescription">Service Group Description</label>
+                    <input id="newServiceGroupDescription" type="text" class="form-control" ng-model="serviceManagementController.newServiceGroup.description">
+                </div>
+                <div class="form-group">
+                    <label for="newServiceGroupParentGroupId">Parent Group</label>
+                    <select id="newServiceGroupParentGroupId" class="form-control" ng-model="serviceManagementController.newServiceGroup.parentGroupId">
+                        <option ng-repeat="serviceGroup in serviceManagementController.serviceGroups" value="{{serviceGroup.id}}">{{serviceGroup.name}}</option>
+                    </select>
+                </div>
+                <button class="btn btn-primary" ng-click="serviceManagementController.addServiceGroup()">Add</button>
+            </form>
+        </div>
+        <h4>Add New Service</h4>
+        <div>
+            <form>
+                <div class="form-group">
+                    <label for="newServiceName">Service Name</label>
+                    <input id="newServiceName" type="text" class="form-control" ng-model="serviceManagementController.newService.name">
+                </div>
+                <div class="form-group">
+                    <label for="newServiceDescription">Service Description</label>
+                    <input id="newServiceDescription" type="text" class="form-control" ng-model="serviceManagementController.newService.description">
+                </div>
+                <div class="form-group">
+                    <label for="newServiceGroupId">Group</label>
+                    <select id="newServiceGroupId" class="form-control" ng-model="serviceManagementController.newService.groupId">
+                        <option ng-repeat="serviceGroup in serviceManagementController.serviceGroups" value="{{serviceGroup.id}}">{{serviceGroup.name}}</option>
+                    </select>
+                </div>
+                <button class="btn btn-primary" ng-click="serviceManagementController.addService()">Add</button>
+            </form>
+        </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular-route.min.js"></script>
+<script src="js/admin/admin.js"></script>
+</body>
+</html>

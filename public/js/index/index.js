@@ -26,7 +26,7 @@ function ServiceGroupService($http) {
 }
 
 ServiceGroupService.prototype.getServiceGroups = function () {
-    return this.$http.get("/api/serviceGroups");
+    return this.$http.get("/api/client/serviceGroups");
 };
 
 function SpecialistService($http) {
@@ -79,7 +79,7 @@ LandingController.prototype._generateWeeks = function (year, month) {
     return result;
 };
 
-angular.module("reserveApp", ["ngRoute"])
+angular.module("bookmeApp", ["ngRoute"])
     .factory("mixPanelInterceptorFactory", MixPanelInterceptorFactory)
     .service("serviceGroupService", ServiceGroupService)
     .service("specialistService", SpecialistService)

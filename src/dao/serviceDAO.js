@@ -35,10 +35,30 @@ exports.getServiceGroups = function (parentGroupId) {
 };
 
 /**
+ * @param {string} name
+ * @param {string} description
+ * @param {?number=} parentGroupId
+ * @returns {Promise}
+ */
+exports.addServiceGroup = function (name, description, parentGroupId = null) {
+    return connection.execute("insert into service_groups(service_group_name, service_group_description, parent_service_group_id) values (?, ?, ?)", name, description, parentGroupId);
+};
+
+/**
  * @param {number} groupId
  * @returns {Promise}
  */
 exports.getServices = function (groupId) {
     return connection.selectAll("select * from services where service_group_id = ?", groupId)
         .then(resultSet => resultSet.map(mapService));
+};
+
+/**
+ * @param {string} name
+ * @param {string} description
+ * @param {number} groupId
+ * @returns {Promise}
+ */
+exports.addService = function (name, description, groupId) {
+    return connection.execute("insert into services(service_name, service_description, service_group_id) values (?, ?, ?)", name, description, groupId);
 };
