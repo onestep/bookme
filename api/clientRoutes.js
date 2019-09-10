@@ -5,11 +5,11 @@ const specialistController = require("./controllers/specialistController");
  * @param {Object} app
  */
 exports.init = function (app) {
-    app.route("/api/serviceGroups")
+    app.route("/api/client/serviceGroups")
         .get(serviceController.readRootServiceGroups);
-    app.route("/api/serviceGroups/:groupId")
+    app.route("/api/client/serviceGroups/:groupId")
         .get(serviceController.readServiceGroups);
-    app.route("/api/services/:groupId")
+    app.route("/api/client/services/:groupId")
         .get(serviceController.readServices);
     app.route("/api/specialists")
         .get(specialistController.readSpecialists);

@@ -1,14 +1,16 @@
 const specialistDAO = require("../../src/dao/specialistDAO");
 
+const {HttpCode} = require("../constants");
+
 /**
- * @param {Object} req
- * @param {Object} res
+ * @param {Request} req
+ * @param {Response} res
  */
 exports.readSpecialists = function (req, res) {
     specialistDAO.getSpecialists()
-        .then((specialists) => {
+        .then(specialists => {
             res.json(specialists);
-        }, (error) => {
-            res.sendStatus(500);
+        }, error => {
+            res.sendStatus(HttpCode.INTERNAL_SERVER_ERROR);
         })
 };
