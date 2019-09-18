@@ -1,6 +1,17 @@
 const config = require("../config");
 const connection = require("../connection/" + config.getApplicationOption("connection"));
 
+/**
+ * @typedef {Object} ServiceGroup
+ * @property {number} id
+ * @property {string} name
+ * @property {string} description
+ */
+
+/**
+ * @param row
+ * @returns {ServiceGroup}
+ */
 function mapServiceGroup(row) {
     return {
         id: row["service_group_id"],
@@ -9,16 +20,29 @@ function mapServiceGroup(row) {
     };
 }
 
+/**
+ * @typedef {Object} Service
+ * @property {number} id
+ * @property {string} name
+ * @property {string} description
+ * @property {number} duration
+ */
+
+/**
+ * @param row
+ * @returns {Service}
+ */
 function mapService(row) {
     return {
         id: row["service_id"],
         name: row["service_name"],
-        description: row["service_description"]
+        description: row["service_description"],
+        duration: row["service_duration"]
     };
 }
 
 /**
- * @returns {Promise}
+ * @returns {Promise<Array<ServiceGroup>>}
  */
 exports.getRootServiceGroups = function () {
     return connection.selectAll("select * from service_groups where parent_service_group_id is null")
@@ -27,7 +51,7 @@ exports.getRootServiceGroups = function () {
 
 /**
  * @param {number} parentGroupId
- * @returns {Promise}
+ * @returns {Promise<Array<ServiceGroup>>}
  */
 exports.getServiceGroups = function (parentGroupId) {
     return connection.selectAll("select * from service_groups where parent_service_group_id = ?", parentGroupId)
@@ -46,11 +70,20 @@ exports.addServiceGroup = function (name, description, parentGroupId = null) {
 
 /**
  * @param {number} groupId
- * @returns {Promise}
+ * @returns {Promise<Array<Service>>}
  */
 exports.getServices = function (groupId) {
     return connection.selectAll("select * from services where service_group_id = ?", groupId)
         .then(resultSet => resultSet.map(mapService));
+};
+
+/**
+ * @param {number} serviceId
+ * @returns {Promise<Service | undefined>}
+ */
+exports.getService = function (serviceId) {
+    return connection.selectAll("select * from services where service_id = ?", serviceId)
+        .then(resultSet => resultSet.map(mapService).find(service => service.id === serviceId));
 };
 
 /**
