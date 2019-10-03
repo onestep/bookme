@@ -1,5 +1,6 @@
 const serviceController = require("./controllers/serviceController");
 const specialistController = require("./controllers/specialistController");
+const customerController = require("./controllers/customerController");
 const reservationController = require("./controllers/reservationController");
 
 /**
@@ -16,4 +17,6 @@ exports.init = function (app) {
         .get(specialistController.readSpecialists);
     app.route("/api/reservations")
         .post(reservationController.addReservation);
+    app.route("/api/customers")
+        .post(customerController.addCustomer);
 };

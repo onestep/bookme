@@ -62,10 +62,10 @@ exports.getServiceGroups = function (parentGroupId) {
  * @param {string} name
  * @param {string} description
  * @param {?number=} parentGroupId
- * @returns {Promise}
+ * @returns {Promise.<number>}
  */
 exports.addServiceGroup = function (name, description, parentGroupId = null) {
-    return connection.execute("insert into service_groups(service_group_name, service_group_description, parent_service_group_id) values (?, ?, ?)", name, description, parentGroupId);
+    return connection.insert("insert into service_groups(service_group_name, service_group_description, parent_service_group_id) values (?, ?, ?)", name, description, parentGroupId);
 };
 
 /**
@@ -90,8 +90,8 @@ exports.getService = function (serviceId) {
  * @param {string} name
  * @param {string} description
  * @param {number} groupId
- * @returns {Promise}
+ * @returns {Promise.<number>}
  */
 exports.addService = function (name, description, groupId) {
-    return connection.execute("insert into services(service_name, service_description, service_group_id) values (?, ?, ?)", name, description, groupId);
+    return connection.insert("insert into services(service_name, service_description, service_group_id) values (?, ?, ?)", name, description, groupId);
 };

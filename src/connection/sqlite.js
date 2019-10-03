@@ -32,16 +32,16 @@ exports.selectAll = function (query, ...params) {
 /**
  * @param {string} query
  * @param {...*} params
- * @returns {Promise}
+ * @returns {Promise.<number>}
  */
-exports.execute = function (query, ...params) {
+exports.insert = function (query, ...params) {
     return new Promise((resolve, reject) => {
         database.run(query, ...params, function (error) {
             if (error) {
                 console.error(error);
                 reject(error)
             } else {
-                resolve();
+                resolve(this.lastID);
             }
         })
     })

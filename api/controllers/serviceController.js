@@ -46,8 +46,8 @@ exports.addServiceGroup = function (req, res) {
         serviceGroup["description"],
         serviceGroup["parentGroupId"]
     )
-        .then(() => {
-            res.sendStatus(HttpCode.CREATED);
+        .then(id => {
+            res.status(HttpCode.CREATED).json({id});
         }, error => {
             res.sendStatus(HttpCode.INTERNAL_SERVER_ERROR);
         });

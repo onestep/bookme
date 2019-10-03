@@ -25,11 +25,12 @@ exports.addReservation = function (req, res) {
             return reservationDAO.addReservation(
                 reservation["serviceId"],
                 reservation["specialistId"],
+                reservation["customerId"],
                 fromDateTime.toDate(),
                 toDateTime.toDate()
             )
-                .then(() => {
-                    res.sendStatus(HttpCode.CREATED)
+                .then(id => {
+                    res.status(HttpCode.CREATED).json({id})
                 }, error => {
                     res.sendStatus(HttpCode.INTERNAL_SERVER_ERROR);
                 });
