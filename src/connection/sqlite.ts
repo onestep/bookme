@@ -35,7 +35,7 @@ exports.selectAll = function (query, ...params) {
  * @returns {Promise}
  */
 exports.execute = function (query, ...params) {
-    return new Promise((resolve, reject) => {
+    return new Promise<void>((resolve, reject) => {
         database.run(query, ...params, function (error) {
             if (error) {
                 console.error(error);

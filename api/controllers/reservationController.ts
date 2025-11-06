@@ -1,4 +1,4 @@
-const moment = require("moment");
+const moment = require("moment-timezone");
 const reservationDAO = require("../../src/dao/reservationDAO");
 const serviceDAO = require("../../src/dao/serviceDAO");
 
