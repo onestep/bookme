@@ -1,14 +1,15 @@
-const moment = require("moment-timezone");
-const reservationDAO = require("../../src/dao/reservationDAO");
-const serviceDAO = require("../../src/dao/serviceDAO");
+import type {Request, Response} from "express";
+import moment from "moment-timezone";
+import * as reservationDAO from "../../src/dao/reservationDAO";
+import * as serviceDAO from "../../src/dao/serviceDAO";
 
-const {HttpCode} = require("../constants");
+import {HttpCode} from "../constants";
 
 /**
  * @param {Request} req
  * @param {Response} res
  */
-exports.addReservation = function (req, res) {
+export function addReservation(req: Request, res: Response) {
     const reservation = req.body;
 
     const service = serviceDAO.getService(reservation["serviceId"])
@@ -36,4 +37,4 @@ exports.addReservation = function (req, res) {
         }, error => {
             res.sendStatus(HttpCode.INTERNAL_SERVER_ERROR);
         });
-};
+}

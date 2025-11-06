@@ -1,4 +1,4 @@
-const config = require("../config");
+import * as config from "../config";
 const connection = require("../connection/" + config.getApplicationOption("connection"));
 
 /**
@@ -8,6 +8,6 @@ const connection = require("../connection/" + config.getApplicationOption("conne
  * @param {Date} toDateTime
  * @returns {Promise}
  */
-exports.addReservation = function (serviceId, specialistId, fromDateTime, toDateTime) {
+export function addReservation(serviceId: number, specialistId: number, fromDateTime: Date, toDateTime: Date): Promise<any> {
     return connection.execute("insert into reservations(service_id, specialist_id, reservation_from_datetime, reservation_to_datetime) values (?, ?, ?, ?)", serviceId, specialistId, fromDateTime, toDateTime);
-};
+}

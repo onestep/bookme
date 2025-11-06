@@ -1,5 +1,5 @@
-const path = require("path");
-const fs = require("fs");
+import path from "path";
+import fs from "fs";
 
 const applicationRoot = path.resolve(__dirname, "..");
 const applicationConfigRoot = path.resolve(applicationRoot, "config");
@@ -7,22 +7,22 @@ const connectionConfigRoot = path.resolve(applicationConfigRoot, "connection");
 const applicationConfig = JSON.parse(fs.readFileSync(path.resolve(applicationConfigRoot, "application.json"), "utf-8"));
 const connectionConfig = JSON.parse(fs.readFileSync(path.resolve(connectionConfigRoot, applicationConfig["connection"] + ".json"), "utf-8"));
 
-exports.getApplicationRoot = function () {
+export function getApplicationRoot() {
     return applicationRoot;
-};
+}
 
-exports.getApplicationConfigRoot = function () {
+export function getApplicationConfigRoot() {
     return applicationConfigRoot;
-};
+}
 
-exports.getConnectionConfigRoot = function () {
+export function getConnectionConfigRoot() {
     return connectionConfigRoot;
-};
+}
 
-exports.getApplicationOption = function (name) {
+export function getApplicationOption(name) {
     return applicationConfig[name];
-};
+}
 
-exports.getConnectionOption = function (name) {
+export function getConnectionOption(name) {
     return connectionConfig[name];
-};
+}

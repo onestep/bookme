@@ -1,5 +1,5 @@
-const mysql = require("mysql");
-const config = require("../config");
+import mysql from "mysql";
+import * as config from "../config";
 
 const connection = mysql.createConnection({
     host: config.getConnectionOption("host"),
@@ -19,7 +19,7 @@ connection.connect(function (error) {
  * @param {...*} params
  * @returns {Promise.<Array>}
  */
-exports.selectAll = function (query, ...params) {
+export function selectAll(query: string, ...params: any[]): Promise<Array<any>> {
     return new Promise((resolve, reject) => {
         connection.query(query, ...params, function (error, resultSet) {
             if (error) {
@@ -30,4 +30,4 @@ exports.selectAll = function (query, ...params) {
             }
         });
     });
-};
+}

@@ -1,11 +1,12 @@
-const serviceController = require("./controllers/serviceController");
-const specialistController = require("./controllers/specialistController");
-const reservationController = require("./controllers/reservationController");
+import type {Application} from "express";
+import * as serviceController from "./controllers/serviceController";
+import * as specialistController from "./controllers/specialistController";
+import * as reservationController from "./controllers/reservationController";
 
 /**
  * @param {Application} app
  */
-exports.init = function (app) {
+export function init(app: Application) {
     app.route("/api/client/serviceGroups")
         .get(serviceController.readRootServiceGroups);
     app.route("/api/client/serviceGroups/:groupId")
@@ -16,4 +17,4 @@ exports.init = function (app) {
         .get(specialistController.readSpecialists);
     app.route("/api/reservations")
         .post(reservationController.addReservation);
-};
+}

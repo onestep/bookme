@@ -1,7 +1,7 @@
-const express = require("express");
-const bodyParser = require("body-parser");
-const clientRoutes = require("./api/clientRoutes");
-const adminRoutes = require("./api/adminRoutes");
+import express from "express";
+import bodyParser from "body-parser";
+import * as clientRoutes from "./api/clientRoutes";
+import * as adminRoutes from "./api/adminRoutes";
 
 const app = express();
 

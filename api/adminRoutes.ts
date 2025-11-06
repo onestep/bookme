@@ -1,12 +1,13 @@
-const serviceController = require("./controllers/serviceController");
+import type {Application} from "express";
+import * as serviceController from "./controllers/serviceController";
 
 /**
- * @param {Object} app
+ * @param {Application} app
  */
-exports.init = function (app) {
+export function init(app: Application) {
     app.route("/api/admin/serviceGroups")
         .get(serviceController.readRootServiceGroups)
         .post(serviceController.addServiceGroup);
     app.route("/api/admin/serviceGroups/:groupId")
         .get(serviceController.readServiceGroups);
-};
+}

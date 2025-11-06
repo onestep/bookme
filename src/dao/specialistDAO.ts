@@ -1,7 +1,14 @@
-const config = require("../config");
+import * as config from "../config";
 const connection = require("../connection/" + config.getApplicationOption("connection"));
 
-function mapSpecialist(row) {
+interface Specialist {
+    id: number;
+    firstName: string;
+    lastName: string;
+    middleName: string;
+}
+
+function mapSpecialist(row): Specialist {
     return {
         id: row["specialist_id"],
         firstName: row["specialist_first_name"],
@@ -10,7 +17,7 @@ function mapSpecialist(row) {
     };
 }
 
-exports.getSpecialists = function () {
+export function getSpecialists(): Promise<Array<Specialist>> {
     return connection.selectAll("select * from specialists")
         .then((resultSet) => resultSet.map(mapSpecialist));
-};
+}

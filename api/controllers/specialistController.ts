@@ -1,16 +1,17 @@
-const specialistDAO = require("../../src/dao/specialistDAO");
+import type {Request, Response} from "express";
+import * as specialistDAO from "../../src/dao/specialistDAO";
 
-const {HttpCode} = require("../constants");
+import {HttpCode} from "../constants";
 
 /**
  * @param {Request} req
  * @param {Response} res
  */
-exports.readSpecialists = function (req, res) {
+export function readSpecialists(req: Request, res: Response) {
     specialistDAO.getSpecialists()
         .then(specialists => {
             res.json(specialists);
         }, error => {
             res.sendStatus(HttpCode.INTERNAL_SERVER_ERROR);
         })
-};
+}

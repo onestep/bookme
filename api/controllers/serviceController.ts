@@ -1,25 +1,26 @@
-const serviceDAO = require("../../src/dao/serviceDAO");
+import type {Request, Response} from "express";
+import * as serviceDAO from "../../src/dao/serviceDAO";
 
-const {HttpCode} = require("../constants");
+import {HttpCode} from "../constants";
 
 /**
  * @param {Request} req
  * @param {Response} res
  */
-exports.readRootServiceGroups = function (req, res) {
+export function readRootServiceGroups(req: Request, res: Response) {
     serviceDAO.getRootServiceGroups()
         .then(serviceGroups => {
             res.json(serviceGroups);
         }, error => {
             res.sendStatus(HttpCode.INTERNAL_SERVER_ERROR);
         });
-};
+}
 
 /**
  * @param {Request} req
  * @param {Response} res
  */
-exports.readServiceGroups = function (req, res) {
+export function readServiceGroups(req: Request, res: Response) {
     const groupId = parseInt(req.params["groupId"]);
 
     serviceDAO.getServiceGroups(groupId)
@@ -32,13 +33,13 @@ exports.readServiceGroups = function (req, res) {
         }, error => {
             res.sendStatus(HttpCode.INTERNAL_SERVER_ERROR);
         });
-};
+}
 
 /**
  * @param {Request} req
  * @param {Response} res
  */
-exports.addServiceGroup = function (req, res) {
+export function addServiceGroup(req: Request, res: Response) {
     const serviceGroup = req.body;
 
     serviceDAO.addServiceGroup(
@@ -51,13 +52,13 @@ exports.addServiceGroup = function (req, res) {
         }, error => {
             res.sendStatus(HttpCode.INTERNAL_SERVER_ERROR);
         });
-};
+}
 
 /**
  * @param {Request} req
  * @param {Response} res
  */
-exports.readServices = function (req, res) {
+export function readServices(req: Request, res: Response) {
     const groupId = parseInt(req.params["groupId"]);
 
     serviceDAO.getServices(groupId)
@@ -70,4 +71,4 @@ exports.readServices = function (req, res) {
         }, error => {
             res.sendStatus(HttpCode.INTERNAL_SERVER_ERROR);
         });
-};
+}
