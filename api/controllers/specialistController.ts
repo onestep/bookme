@@ -7,11 +7,12 @@ import {HttpCode} from "../constants";
  * @param {Request} req
  * @param {Response} res
  */
-export function readSpecialists(req: Request, res: Response) {
-    specialistDAO.getSpecialists()
-        .then(specialists => {
-            res.json(specialists);
-        }, error => {
-            res.sendStatus(HttpCode.INTERNAL_SERVER_ERROR);
-        })
+export async function readSpecialists(req: Request, res: Response) {
+    try {
+        const specialists = await specialistDAO.getSpecialists();
+
+        res.json(specialists);
+    } catch (error) {
+        res.sendStatus(HttpCode.INTERNAL_SERVER_ERROR);
+    }
 }

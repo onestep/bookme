@@ -34,8 +34,8 @@ export function selectAll(query: string, ...params: any[]): Promise<Array<any>> 
  * @param {...*} params
  * @returns {Promise}
  */
-export function execute(query: string, ...params: any[]): Promise<any> {
-    return new Promise<void>((resolve, reject) => {
+export function execute(query: string, ...params: any[]): Promise<void> {
+    return new Promise((resolve, reject) => {
         database.run(query, ...params, function (error) {
             if (error) {
                 console.error(error);

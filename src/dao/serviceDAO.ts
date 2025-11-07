@@ -62,7 +62,7 @@ export function getServiceGroups(parentGroupId: number): Promise<Array<ServiceGr
  * @param {?number=} parentGroupId
  * @returns {Promise}
  */
-export function addServiceGroup(name: string, description: string, parentGroupId: (number | null) | undefined = null): Promise<any> {
+export function addServiceGroup(name: string, description: string, parentGroupId: (number | null) | undefined = null): Promise<void> {
     return connection.execute("insert into service_groups(service_group_name, service_group_description, parent_service_group_id) values (?, ?, ?)", name, description, parentGroupId);
 }
 
@@ -90,6 +90,6 @@ export function getService(serviceId: number): Promise<Service | undefined> {
  * @param {number} groupId
  * @returns {Promise}
  */
-export function addService(name: string, description: string, groupId: number): Promise<any> {
+export function addService(name: string, description: string, groupId: number): Promise<void> {
     return connection.execute("insert into services(service_name, service_description, service_group_id) values (?, ?, ?)", name, description, groupId);
 }

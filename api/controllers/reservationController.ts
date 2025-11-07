@@ -9,32 +9,34 @@ import {HttpCode} from "../constants";
  * @param {Request} req
  * @param {Response} res
  */
-export function addReservation(req: Request, res: Response) {
+export async function addReservation(req: Request, res: Response) {
     const reservation = req.body;
 
-    const service = serviceDAO.getService(reservation["serviceId"])
-        .then(service => {
-            if (!service) {
-                res.sendStatus(HttpCode.BAD_REQUEST);
+    try {
+        const service = await serviceDAO.getService(reservation["serviceId"]);
 
-                return;
-            }
+        if (!service) {
+            res.sendStatus(HttpCode.BAD_REQUEST);
 
-            const fromDateTime = moment.unix(reservation["fromDateTime"]);
-            const toDateTime = fromDateTime.add(service.duration, "m");
+            return;
+        }
 
-            return reservationDAO.addReservation(
+        const fromDateTime = moment.unix(reservation["fromDateTime"]);
+        const toDateTime = fromDateTime.add(service.duration, "m");
+
+        try {
+            await reservationDAO.addReservation(
                 reservation["serviceId"],
                 reservation["specialistId"],
                 fromDateTime.toDate(),
                 toDateTime.toDate()
-            )
-                .then(() => {
-                    res.sendStatus(HttpCode.CREATED)
-                }, error => {
-                    res.sendStatus(HttpCode.INTERNAL_SERVER_ERROR);
-                });
-        }, error => {
+            );
+
+            res.sendStatus(HttpCode.CREATED);
+        } catch (error) {
             res.sendStatus(HttpCode.INTERNAL_SERVER_ERROR);
-        });
+        }
+    } catch (error) {
+        res.sendStatus(HttpCode.INTERNAL_SERVER_ERROR);
+    }
 }
